@@ -79,7 +79,7 @@ function CheckQuest()
            LevelQuest = 1
            CFrameQuest = CFrame.new(-1140.1197509765625, 4.752061367034912, 3829.87158203125)
            CFrameMon = CFrame.new(-1316.56201171875, 55.71087646484375, 3902.89208984375)
-        elseif Level == 40 or Level <= 59 then
+        elseif Level == 40 or Level <= 600 then
            Mon = "Brute [Lv. 45]"
            NameMon = "Brute"
            NameQuest = "BuggyQuest1"
