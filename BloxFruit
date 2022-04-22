@@ -1,0 +1,210 @@
+local Pl = game.PlaceId
+if Pl == 2753915549 then
+    OldWolrd = true
+end
+
+-- Tween
+   function TP(P)
+    Distance = (P.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance < 200 then
+       Speed = 1000
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = P
+    elseif Distance <= 1000 then
+       Speed = 250
+    end
+    game:GetService("TweenService"):Create(
+    game.Players.LocalPlayer.Character.HumanoidRootPart,
+    TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+    {CFrame = P}
+    ):Play()
+ end
+
+-- Noclip
+spawn(function()
+    game:GetService("RunService").Heartbeat:Connect(function()
+        if _G.Noclip or _G.AutoFarm then
+        if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
+            setfflag("HumanoidParallelRemoveNoPhysics", "False")
+            setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+            game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
+        end
+    end
+end)
+end)
+
+-- Click
+function click()
+   local VirtualUser = game:GetService('VirtualUser')
+		VirtualUser:CaptureController()
+		VirtualUser:ClickButton1(Vector2.new(851, 158), game:GetService("Workspace").Camera.CFrame)
+end
+
+-- Equip
+function itemequip(ToolSe)
+	   if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
+		tool = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe)
+		wait(.1)
+	    game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
+	end
+end
+
+-- Quest
+function CheckQuest()
+    local Level = game:GetService("Players").localPlayer.Data.Level.Value
+    if OldWolrd then
+       if  Level == 1 or Level <= 9 then
+           Mon = "Bandit [Lv. 5]"
+           NameMon = "Bandit"
+           NameQuest = "BanditQuest1"
+           LevelQuest = 1
+           CFrameQuest = CFrame.new(1060.093994140625, 16.393522262573242, 1548.506591796875)
+           CFrameMon = CFrame.new(1037.7762451171875, 80.48663330078125, 1593.9755859375)
+       elseif Level == 10 or Level <= 14 then
+           Mon = "Monkey [Lv. 14]"
+           NameMon = "Monkey"
+           NameQuest = "JungleQuest"
+           LevelQuest = 1
+           CFrameQuest = CFrame.new(-1600.0423583984375, 36.85213851928711, 153.3655242919922)
+           CFrameMon = CFrame.new(-1766.5274658203125, 60.83518600463867, 47.6733512878418)
+        elseif Level == 15 or Level <= 29 then
+           Mon = "Gorilla [Lv. 20]"
+           NameMon = "Gorilla"
+           NameQuest = "JungleQuest"
+           LevelQuest = 2
+           CFrameQuest = CFrame.new(-1600.0423583984375, 36.85213851928711, 153.3655242919922)
+           CFrameMon = CFrame.new(-1139.091552734375, 40.462188720703125, -511.97698974609375)
+        elseif Level == 30 or Level <= 39 then
+           Mon = "Pirate [Lv. 35]"
+           NameMon = "Pirate"
+           NameQuest = "BuggyQuest1"
+           LevelQuest = 1
+           CFrameQuest = CFrame.new(-1140.1197509765625, 4.752061367034912, 3829.87158203125)
+           CFrameMon = CFrame.new(-1316.56201171875, 55.71087646484375, 3902.89208984375)
+        elseif Level == 40 or Level <= 59 then
+           Mon = "Brute [Lv. 45]"
+           NameMon = "Brute"
+           NameQuest = "BuggyQuest1"
+           LevelQuest = 2
+           CFrameQuest = CFrame.new(-1140.1197509765625, 4.752061367034912, 3829.87158203125)
+           CFrameMon = CFrame.new(-943.1382446289062, 64.53826904296875, 4181.677734375)
+    end
+end
+end
+
+
+
+
+local Lib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
+local win = Lib:Window("xXSWEETXx | HUB")
+local serv = win:Server("Main", "")
+local Tab1 = serv:Channel("AutoFarm")
+local Tab2 = serv:Channel("AutoStats")
+
+Weapon = {}
+for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+    if v:IsA ("Tool") then
+        table.insert(Weapon,v.Name)
+    end
+end
+
+local drop = Tab1:Dropdown("Select Weapon",Weapon, function(v)
+    _G.SelectWeapon = v
+end)
+
+Tab1:Button("Refresh Weapon", function()
+    drop:Clear()
+    for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+    if v:IsA ("Tool") then
+        table.insert(Weapon,v.Name)
+    drop:Add(v.Name)
+       end
+    end
+end)
+
+Tab1:Toggle("AutoFarm",false, function(v)
+    _G.AutoFarm = v
+end)
+
+Tab1:Toggle("Bringmon",false, function(v)
+    _G.Bringmon = v
+while _G.Bringmon do wait()
+    pcall(function()
+        CheckQuest()
+for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+for x,y in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+if v.Name == Mon then
+    if y.Name == Mon then
+   v.HumanoidRootPart.CFrame = y.HumanoidRootPart.CFrame
+   v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+   y.HumanoidRootPart.Size = Vector3.new(60,60,60)
+   v.HumanoidRootPart.Transparency = 1
+   v.HumanoidRootPart.CanCollide = false
+   y.HumanoidRootPart.CanCollide = false
+   v.Humanoid.WalkSpeed = 0
+   y.Humanoid.WalkSpeed = 0
+   v.Humanoid.JumpPower = 0
+   y.Humanoid.JumpPower = 0
+   if sethiddenproperty then
+     sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+spawn(function()
+    while wait() do
+        if _G.AutoFarm then
+            pcall(function()
+            CheckQuest()
+        if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+            TP(CFrameQuest)
+        if (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
+            wait(1)
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,LevelQuest)
+        end
+        elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+            if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text,NameMon) then
+                for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                    if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
+                    if v.Name == Mon and v:FindFirstChild("HumanoidRootPart") then
+                        repeat task.wait()
+                            itemequip(_G.SelectWeapon)
+                            click()
+                            TP(v.HumanoidRootPart.CFrame * CFrame.new(0,25,0))
+                            v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+                            v.HumanoidRootPart.CanCollide = false
+                            v.HumanoidRootPart.Anchored = true
+                            v.Humanoid.WalkSpeed = 0
+                            v.Humanoid.JumpPower = 0
+                        until _G.AutoFarm == false or v.Humanoid.Health <= 0 or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                            end
+                        else
+                            TP(CFrameMon)
+                        end
+                    end
+                    else
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                    end
+                end
+            end)
+        end    
+    end
+end)
+
+Tab2:Toggle("Melee",false, function(v)
+    _G.Melee = v
+    while _G.Melee do wait()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",1)
+    end
+end)
+
+Tab1:Toggle("AutoSetSpawn",false, function(v)
+    _G.Spawn = v
+    while _G.Spawn do wait()
+       game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetSpawnPoint") 
+    end
+end)
